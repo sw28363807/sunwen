@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientBuildingBasePattern";
+
+message BuildingBase {
+    string Id = 1;
+    string ListName = 2;
+    int32 BaseType = 3;
+    repeated string FixedBuildings = 4;
+    int32 BaseSize = 5;
+    repeated string Pos = 6;
+    repeated string PosSelection = 7;
+    int32 ZOrder = 8;
+    int32 PathPointIndex = 9;
+    int32 Order = 10;
+    int32 BelongScene = 11;
+}
