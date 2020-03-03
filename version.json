@@ -23,7 +23,7 @@
   "bg/beijingtu.jpg": "bg/beijingtu-4f877f0cfe.jpg",
   "bg/ditu.png": "bg/ditu-fbdac1ed99.png",
   "bg/ditu_beach.jpg": "bg/ditu_beach-7ef0d6520c.jpg",
-  "bg/login.jpg": "bg/login-2c39882083.jpg",
+  "bg/login.jpg": "bg/login-5b53325c67.jpg",
   "component_beach/che_1.png": "component_beach/che_1-8b6c9008d8.png",
   "component_beach/che_2.png": "component_beach/che_2-ad5413d852.png",
   "component_beach/che_3.png": "component_beach/che_3-955017b668.png",
@@ -96,7 +96,7 @@
   "component_coffee/zuoyi_3.png": "component_coffee/zuoyi_3-92ab590975.png",
   "fileconfig.json": "fileconfig-73a59abf8e.json",
   "index.js": "index-573b34be6c.js",
-  "js/bundle.js": "js/bundle-2e0b0e8884.js",
+  "js/bundle.js": "js/bundle-24f9c5a6bf.js",
   "libs/crc32.js": "libs/crc32-2e8b476993.js",
   "libs/crypto-js.js": "libs/crypto-js-ad4d4321f8.js",
   "libs/jsencrypt.js": "libs/jsencrypt-5484438d1c.js",
@@ -209,7 +209,7 @@
   "scene/BeachScene.json": "scene/BeachScene-ea23037135.json",
   "scene/CoffeeScene.json": "scene/CoffeeScene-846d89fba4.json",
   "scene/FishingScene.json": "scene/FishingScene-d91d217438.json",
-  "scene/Login.json": "scene/Login-4538a343b6.json",
+  "scene/Login.json": "scene/Login-137bde0f30.json",
   "scene/cao.png": "scene/cao-60a200ab51.png",
   "scene/denglong.png": "scene/denglong-42996bfbad.png",
   "scene/diban.png": "scene/diban-ab4ac4c62d.png",
@@ -304,5 +304,5 @@
   "ui/placePop.json": "ui/placePop-3d0772fa29.json",
   "ui/shopPop.json": "ui/shopPop-ed9e05b528.json",
   "ui/taskPop.json": "ui/taskPop-283f3af69a.json",
-  "unpack.json": "unpack-f62dc514b4.json"
+  "unpack.json": "unpack-576b483f6e.json"
 }
