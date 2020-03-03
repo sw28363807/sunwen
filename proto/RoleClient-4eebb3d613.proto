@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientRolePattern";
+
+message Role {
+    string Id = 1;
+    string Name = 2;
+    string Source = 3;
+    string Desc1 = 4;
+    string EventVisit = 5;
+    string EventTravel = 6;
+    repeated int32 Intimacy = 7;
+    string AdoptLimit = 8;
+    int32 ValueBase = 9;
+    repeated int32 EventTimes = 10;
+    repeated string FavorFoodsList = 11;
+}

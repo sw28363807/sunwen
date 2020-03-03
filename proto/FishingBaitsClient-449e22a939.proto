@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientFishingBaitsPattern";
+
+message FishingBaits {
+    string Id = 1;
+    string img = 2;
+    repeated string normal = 3;
+    repeated string special = 4;
+    int32 speed = 5;
+    string hitZoneID = 6;
+}
