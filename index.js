@@ -1,0 +1,1 @@
+window.screenOrientation="sensor_landscape",loadLib("libs/crypto-js.js"),loadLib("libs/jsencrypt.js"),loadLib("libs/crc32.js"),loadLib("libs/laya.core.js"),loadLib("libs/laya.ani.js"),loadLib("libs/laya.ui.js"),loadLib("libs/protobuf.js"),loadLib("libs/protobuf-library.js"),loadLib("libs/protobuf-bundles.js"),loadLib("js/bundle.js");
