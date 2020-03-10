@@ -12,5 +12,6 @@ message ActionEvent {
     int32 WeightBase = 5;
     repeated string NextEvent = 6;
     repeated string CompleteReward = 7;
-    int32 IntimacyUp = 8;
+    string SCompleteReward = 8;
+    int32 IntimacyUp = 9;
 }

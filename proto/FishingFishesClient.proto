@@ -12,4 +12,5 @@ message FishingFishes {
     double sizeTimes = 5;
     int32 income = 6;
     double incomeTimes = 7;
+    string NauticalFoods = 8;
 }
