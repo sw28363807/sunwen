@@ -41,4 +41,3 @@ message RemoveBuildingRes {
     option (cmdid) = 10103;
     BaseInfo.Bag bag = 1;
 }
-

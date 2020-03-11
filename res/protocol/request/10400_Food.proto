@@ -3,9 +3,6 @@ package Food;
 
 import "BaseInfo.proto";
 
-option java_outer_classname = "FoodHandlerProtocol";
-option java_package = "cat.mid.protocol";
-
 // 获取玩家菜谱信息：请求
 message GetPlayerFoodMenuReq {
     option (cmdid) = 10401;

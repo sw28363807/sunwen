@@ -3,7 +3,6 @@ syntax = "proto3";
 
 import "BaseInfo.proto";
 
-
 // 登录：请求
 message LoginReq {
     option (cmdid) = 10001;
@@ -15,10 +14,11 @@ message LoginRes {
     option (cmdid) = 10001;
     BaseInfo.Bag bag = 1;
     BaseInfo.PlayerBuilding playerBuilding = 2;
-    BaseInfo.PlayerCats playerCats = 3;
+    BaseInfo.PlayerPets playerPets = 3;
     BaseInfo.Tasks tasks = 4;
     BaseInfo.FoodMenu menu = 5;
     BaseInfo.LetterBox letterbox = 6;
+    Scene.FishingGameInfo fishingGameInfo = 8;
     string customData = 7;
 }
 

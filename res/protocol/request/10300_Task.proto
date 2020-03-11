@@ -3,9 +3,6 @@ package Task;
 
 import "BaseInfo.proto";
 
-option java_outer_classname = "TaskHandlerProtocol";
-option java_package = "cat.mid.protocol";
-
 // 获取玩家所有任务信息：请求
 message GetAllTasksReq {
     option (cmdid) = 10301;

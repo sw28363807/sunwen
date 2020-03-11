@@ -17,7 +17,8 @@ message Building {
     int32 AutoIncome = 10;
     repeated string CustomerInvite = 11;
     repeated string SupportActions = 12;
-    int32 BelongScene = 13;
-    int32 SpecialTpye = 14;
-    string SpecialValue = 15;
+    int32 PointCount = 13;
+    int32 BelongScene = 14;
+    int32 SpecialTpye = 15;
+    string SpecialValue = 16;
 }
