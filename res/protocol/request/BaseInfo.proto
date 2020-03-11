@@ -1,11 +1,6 @@
 syntax = "proto3";
 package BaseInfo;
 
-import "Importer.proto";
-
-option java_outer_classname = "BaseInfoProtocol";
-option java_package = "com.fy.protocol";
-
 //<--------------- 背包
 
 //背包中单个道具
