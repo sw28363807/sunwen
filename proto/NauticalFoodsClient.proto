@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientNauticalFoodsPattern";
+
+message NauticalFoods {
+    string Id = 1;
+    string Name = 2;
+    string Desc = 3;
+    string Icon = 4;
+    int32 Point = 5;
+    int32 Intimacy = 6;
+    string UpgradeLine = 7;
+}

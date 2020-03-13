@@ -1,0 +1,19 @@
+package Notify;
+syntax = "proto3";
+
+import "TestOut.proto";
+
+// 测试
+message Test {
+    option (cmdid) = 1001;
+    string rid = 1;
+    int32 num = 2;
+
+    TestIn testIn = 3;
+    TestOut testOut = 4;
+}
+
+message TestIn {
+    string hello = 1;
+    int32 world = 2;
+}

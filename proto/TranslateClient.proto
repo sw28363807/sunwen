@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientTranslatePattern";
+
+message Translate {
+    string Id = 1;
+    repeated string zh_CH = 2;
+}
