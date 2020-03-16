@@ -344,7 +344,7 @@ window.wxMiniGame = function (exports, Laya) {
 	        if (!this.loop) {
 	            this._audio.offEnded(null);
 	            this._miniSound.dispose();
-	            this._audio = null;
+	            // this._audio = null;
 	            this._miniSound = null;
 	            this._onEnd = null;
 	        }
