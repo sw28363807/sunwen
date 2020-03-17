@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientConstPattern";
+
+message Const {
+    string Id = 1;
+    string Value = 2;
+}

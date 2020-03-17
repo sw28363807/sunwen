@@ -1,0 +1,62 @@
+syntax = "proto3";
+package FishingGame;
+
+import "BaseInfo.proto";
+
+
+//获取钓鱼小游戏信息：请求
+message GetFishGameInfoReq {
+    option (cmdid) = 10701;
+}
+
+//获取钓鱼小游戏信息：返回
+message GetFishGameInfoRes {
+    option (cmdid) = 10701;
+    FishingGameInfo gameInfo = 1;
+    BaseInfo.CurrencyBag bag = 2;
+}
+
+//钓了一次鱼的结果：请求
+message PlayFishGameReq {
+    option (cmdid) = 10702;
+    string fishingFishId = 1; //钓到的鱼品种，对应FishingFishes.Id
+    string fishingBaitId = 2; //鱼饵id，对应FishingBaits.Id
+    BaseInfo.Rewards rewards = 3; //获得的奖励
+    double fishingFishSize = 4; //钓到的鱼大小
+}
+
+//钓了一次鱼的结果：返回
+message PlayFishGameRes {
+    option (cmdid) = 10702;
+    BaseInfo.CurrencyBag bag = 2;
+    FishingGameInfo gameInfo = 3;
+    BaseInfo.Rewards actualRewards = 4; //实际获得的奖励
+}
+
+//获取钓鱼图鉴信息：请求
+message GetFishingFishInfoReq {
+    option (cmdid) = 10703;
+}
+
+//获取钓鱼图鉴信息：返回
+message GetFishingFishInfoRes {
+    option (cmdid) = 10703;
+    map<string, FishingFishInfo> fishInfos = 1; //钓鱼图鉴<FishingFishes.Id, info>
+}
+
+//----------基础信息----------
+//钓鱼小游戏信息
+message FishingGameInfo {
+    int32 remainTimes = 1; //剩余游玩次数
+    int32 maxTimes = 2; //最大存储次数
+    int64 nextUpdateTs = 3; //下次恢复的时间（剩余>=最大时，值为-1）
+    string lastBaitsId = 4; //上次使用的鱼饵id
+}
+
+//单个钓鱼图鉴
+message FishingFishInfo {
+    string fishId = 1; //对应FishingFishes.Id
+    int32 acquireTimes = 2; //获取次数
+    double maxSize = 3; //最大尺寸
+    bool newCome = 5;   //是否是新来的鱼
+}

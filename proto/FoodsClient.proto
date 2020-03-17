@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientFoodsPattern";
+
+message Foods {
+    string Id = 1;
+    string Name = 2;
+    string Type = 3;
+    string Desc1 = 4;
+    string Source = 5;
+    string ShopItems = 6;
+    int32 Limit = 7;
+    int32 Cost = 8;
+    int32 Income = 9;
+    int32 CookingTime = 10;
+}

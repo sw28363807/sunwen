@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientNauticalToolsPattern";
+
+message NauticalTools {
+    string Id = 1;
+    string Name = 2;
+    string Desc = 3;
+    string Icon = 4;
+    double PointRate = 5;
+    double IntimacyRate = 6;
+}

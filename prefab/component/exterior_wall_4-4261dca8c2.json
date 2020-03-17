@@ -1,0 +1,1 @@
+{"type":"Tree","props":{"y":0,"x":0,"width":1275,"text":"dropPoint","presetID":1,"isPresetRoot":true,"height":614},"compId":460,"child":[{"type":"Sprite","props":{"texture":"component_beach/waiqiang_4.png","presetID":2},"compId":461}],"loadList":["component_beach/waiqiang_4.png"],"loadList3D":[]}

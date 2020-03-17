@@ -1,0 +1,7 @@
+package Notify;
+syntax = "proto3";
+
+message TestOut {
+    string fuck = 1;
+    int32 you = 2;
+}

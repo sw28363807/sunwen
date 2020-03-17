@@ -1,0 +1,14 @@
+syntax = "proto3";
+package PlayerPushMsg;
+
+// 测试用
+message TestMsg {
+    option (cmdid) = 1001;
+    string text = 1;
+}
+
+message ReddotMsg {
+    option (cmdid) = 1002;
+    int32 type = 1;
+    string extraInfo = 2;
+}

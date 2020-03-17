@@ -1,0 +1,70 @@
+syntax = "proto3";
+package Nautical;
+
+import "BaseInfo.proto";
+
+
+// 获取探险信息：请求
+message GetNauticalInfoReq {
+    option (cmdid) = 10601;
+}
+
+// 获取探险信息：返回
+message GetNauticalInfoRes {
+    option (cmdid) = 10601;
+    NauticalInfo nauticalInfo = 1;
+    repeated string petIds = 8; //可出海的宠物id
+    map<string, BaseInfo.Item> nauticalFoods = 9; //探险口粮
+    map<string, BaseInfo.Item> nauticalTools = 10; //探险道具
+}
+
+//合成探险口粮：请求
+message MergeNauticalFoodReq {
+    option (cmdid) = 10602;
+    string id = 1; //目标口粮id
+    int32 amount = 2; //合成数量
+}
+
+//合成探险口粮：返回
+message MergeNauticalFoodRes {
+    option (cmdid) = 10602;
+    BaseInfo.FullBag bag = 1;
+}
+
+//开启一场探险：请求
+message StartNauticalTripReq {
+    option (cmdid) = 10603;
+    repeated string catIds = 1; //出海的猫咪ids
+    map<string, int64> foodInTrip = 2; //出海携带的食物<id, 数量>
+    repeated string toolInTrip = 3; //出海携带的道具<id>
+}
+
+//开启一场探险：返回
+message StartNauticalTripRes {
+    option (cmdid) = 10603;
+    NauticalInfo nauticalInfo = 1;
+}
+
+//收获一场探险：请求
+message FinishNauticalTripReq {
+    option (cmdid) = 10604;
+}
+
+//收获一场探险：返回
+message FinishNauticalTripRes {
+    option (cmdid) = 10604;
+    BaseInfo.FullBag bag = 2; //更新后的背包
+    BaseInfo.Rewards rewards = 3; //本次探险获得的奖励
+}
+
+//----------基础信息----------
+//探险信息
+message NauticalInfo {
+    //探险队信息
+    bool inTrip = 1; //当前是否正在探险
+    int64 tripStartSec = 3; //旅途开始的秒级时间戳（inTrip = false时，该字段数据不可信）
+    int64 tripEndSec = 4; //旅途结束的秒级时间戳（inTrip = false时，该字段数据不可信）
+    repeated string team = 5; //出海航行的猫咪
+    map<string, int64> foodInTrip = 6; //出海携带的口粮
+    repeated string toolInTrip = 7; //出海携带的道具
+}
