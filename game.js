@@ -1,0 +1,1 @@
+"undefined"!=typeof swan&&"undefined"!=typeof swanGlobal?(require("swan-game-adapter.js"),require("libs/laya.bdmini.js")):"undefined"!=typeof wx&&(require("weapp-adapter.js"),require("libs/laya-c9d480487f.wxmini.js")),window.loadLib=require,require("index-b142ed055d.js");
