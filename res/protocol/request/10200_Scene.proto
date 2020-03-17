@@ -15,7 +15,7 @@ message UpdateSceneInfoReq {
 // 同步场景信息：返回
 message UpdateSceneInfoRes {
     option (cmdid) = 10201;
-    BaseInfo.Bag bag = 1;
+    BaseInfo.CurrencyBag bag = 1;
     BaseInfo.LetterBox letterbox = 2;
 }
 
@@ -27,7 +27,7 @@ message FetchLetterBoxReq {
 // 收取信箱奖励：返回
 message FetchLetterBoxRes {
     option (cmdid) = 10202;
-    BaseInfo.Bag bag = 1;
+    BaseInfo.CurrencyBag bag = 1;
     BaseInfo.LetterBox letterbox = 2;
 }
 
@@ -63,7 +63,7 @@ message GetVisitorGiftAllReq {
 message GetVisitorGiftAllRes {
     option (cmdid) = 10205;
     BaseInfo.Rewards rewards = 1;
-    BaseInfo.Bag bag = 2;
+    BaseInfo.CurrencyBag bag = 2;
 }
 
 //领取单个长客礼物：请求
@@ -76,35 +76,8 @@ message GetVisitorGiftSingleReq {
 message GetVisitorGiftSingleRes {
     option (cmdid) = 10208;
     BaseInfo.Rewards rewards = 1;
-    BaseInfo.Bag bag = 2;
+    BaseInfo.CurrencyBag bag = 2;
     repeated VisitorReward visitorRewards = 3; //新的长客礼物表
-}
-
-//获取钓鱼小游戏信息：请求
-message GetFishGameInfoReq {
-    option (cmdid) = 10206;
-}
-
-//获取钓鱼小游戏信息：返回
-message GetFishGameInfoRes {
-    option (cmdid) = 10206;
-    FishingGameInfo gameInfo = 1;
-}
-
-//钓了一次鱼的结果：请求
-message PlayFishGameReq {
-    option (cmdid) = 10207;
-    string fishingFishId = 1; //随机出的鱼品种，对应FishingFishes.Id
-    string fishingBaitId = 2; //鱼饵id，对应FishingBaits.Id
-    BaseInfo.Rewards rewards = 3; //获得的奖励
-}
-
-//钓了一次鱼的结果：返回
-message PlayFishGameRes {
-    option (cmdid) = 10207;
-    BaseInfo.Bag bag = 2;
-    FishingGameInfo gameInfo = 3;
-    BaseInfo.Rewards actualRewards = 4; //实际获得的奖励
 }
 
 //----------基础信息----------
@@ -123,9 +96,3 @@ message VisitorReward {
     string roleId = 6; //猫品种
 }
 
-//钓鱼小游戏信息
-message FishingGameInfo {
-    int32 remainTimes = 1; //剩余游玩次数
-    int32 maxTimes = 2; //最大存储次数
-    int64 nextUpdateTs = 3; //下次恢复的时间（剩余>=最大时，值为-1）
-}

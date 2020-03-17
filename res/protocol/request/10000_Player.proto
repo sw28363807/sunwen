@@ -2,6 +2,7 @@ package Player;
 syntax = "proto3";
 
 import "BaseInfo.proto";
+import "10700_FishingGame.proto";
 
 // 登录：请求
 message LoginReq {
@@ -12,13 +13,13 @@ message LoginReq {
 // 登录：返回。返回数据格式与在线跨天10003保持一致。
 message LoginRes {
     option (cmdid) = 10001;
-    BaseInfo.Bag bag = 1;
+    BaseInfo.CurrencyBag bag = 1;
     BaseInfo.PlayerBuilding playerBuilding = 2;
     BaseInfo.PlayerPets playerPets = 3;
     BaseInfo.Tasks tasks = 4;
     BaseInfo.FoodMenu menu = 5;
     BaseInfo.LetterBox letterbox = 6;
-    Scene.FishingGameInfo fishingGameInfo = 8;
+    FishingGame.FishingGameInfo fishingGameInfo = 8;
     string customData = 7;
 }
 
@@ -40,6 +41,17 @@ message OnlineCrossDayReq {
 // 客户端请求在线跨天：返回。
 message OnlineCrossDayRes {
     option (cmdid) = 10003;
-    BaseInfo.Bag bag = 1;
+    BaseInfo.CurrencyBag bag = 1;
     BaseInfo.Tasks tasks = 4;
+}
+
+// 全背包信息：请求
+message FullBagReq {
+    option (cmdid) = 10004;
+}
+
+// 全背包信息：返回
+message FullBagRes {
+    option (cmdid) = 10004;
+    BaseInfo.FullBag bag = 1;
 }

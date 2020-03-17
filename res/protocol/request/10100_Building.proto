@@ -12,7 +12,7 @@ message GetAllBuildingReq {
 message GetAllBuildingRes {
     option (cmdid) = 10101;
     BaseInfo.PlayerBuilding playerBuilding = 1;
-    BaseInfo.Bag bag = 2;
+    BaseInfo.CurrencyBag bag = 2;
 }
 
 // 摆放一个建筑：请求
@@ -26,7 +26,7 @@ message PutBuildingReq {
 // 摆放一个建筑：返回
 message PutBuildingRes {
     option (cmdid) = 10102;
-    BaseInfo.Bag bag = 1;
+    BaseInfo.CurrencyBag bag = 1;
     BaseInfo.LetterBox letterbox = 2;
 }
 
@@ -39,5 +39,5 @@ message RemoveBuildingReq {
 // 从场景中移除一个建筑：返回
 message RemoveBuildingRes {
     option (cmdid) = 10103;
-    BaseInfo.Bag bag = 1;
+    BaseInfo.CurrencyBag bag = 1;
 }

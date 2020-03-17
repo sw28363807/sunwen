@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package pattern;
+
+option java_outer_classname = "ClientActionPointPattern";
+
+message ActionPoint {
+    string Id = 1;
+    string ActionsSetting = 2;
+}

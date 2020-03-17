@@ -119,7 +119,7 @@ window.wxMiniGame = function (exports, Laya) {
 	                                MiniAdpter.minClearSize = data.size;
 	                            MiniFileMgr.onClearCacheRes();
 	                        }
-	                        MiniFileMgr.deleteFile(tempFilePath, readyUrl, callBack, encoding, data.size);
+	                        MiniFileMgr.deleteFile(tempFileName, readyUrl, callBack, encoding, data.size);
 	                    },
 	                    fail: function (data) {
 	                        callBack != null && callBack.runWith([1, data]);
@@ -339,8 +339,10 @@ window.wxMiniGame = function (exports, Laya) {
 	        Laya.SoundManager.removeChannel(this);
 	        this.completeHandler = null;
 	        if (!this._audio)
-	            return;
-	        this._audio.stop();
+				return;
+			//暂时先这么改
+			//微信平台下this._audio没有pause成员函数，很奇怪
+	        this._audio.pause();
 	        if (!this.loop) {
 	            this._audio.offEnded(null);
 	            this._miniSound.dispose();
@@ -790,14 +792,14 @@ window.wxMiniGame = function (exports, Laya) {
 	            thisLoader.onLoaded(Laya.Loader.preLoadedMap[url]);
 	        else {
 	            var tempurl = Laya.URL.formatURL(url);
-	            if (!MiniFileMgr.isLocalNativeFile(url) && !MiniFileMgr.getFileInfo(tempurl) && url.indexOf(MiniAdpter.window.wx.env.USER_DATA_PATH) == -1 && (tempurl.indexOf("http://") != -1 || tempurl.indexOf("https://") != -1) && !MiniAdpter.AutoCacheDownFile) {
+	            if (url.indexOf(MiniAdpter.window.wx.env.USER_DATA_PATH) == -1 && (tempurl.indexOf("http://") != -1 || tempurl.indexOf("https://") != -1) && !MiniAdpter.AutoCacheDownFile) {
 	                thisLoader._loadHttpRequest(tempurl, contentType, thisLoader, thisLoader.onLoaded, thisLoader, thisLoader.onProgress, thisLoader, thisLoader.onError);
 	            }
 	            else {
 	                var fileObj = MiniFileMgr.getFileInfo(Laya.URL.formatURL(url));
 	                if (fileObj) {
 	                    fileObj.encoding = fileObj.encoding == null ? "utf8" : fileObj.encoding;
-	                    MiniFileMgr.readFile(MiniFileMgr.getFileNativePath(fileObj.md5), encoding, new Laya.Handler(MiniLoader, MiniLoader.onReadNativeCallBack, [url, contentType, thisLoader]), url);
+	                    MiniFileMgr.readFile(fileObj.url, encoding, new Laya.Handler(MiniLoader, MiniLoader.onReadNativeCallBack, [url, contentType, thisLoader]), url);
 	                }
 	                else if (thisLoader.type == "image" || thisLoader.type == "htmlimage") {
 	                    thisLoader._transformUrl(url, contentType);
@@ -836,28 +838,24 @@ window.wxMiniGame = function (exports, Laya) {
 	    }
 	    static _transformImgUrl(url, type, thisLoader) {
 	        if (MiniAdpter.isZiYu) {
-	            thisLoader._loadImage(url, false);
+	            thisLoader._loadImage(url);
 	            return;
 	        }
-	        if (MiniFileMgr.isLocalNativeFile(url)) {
-	            thisLoader._loadImage(url, false);
-	            return;
-	        }
-	        if (!MiniFileMgr.isLocalNativeFile(url) && !MiniFileMgr.getFileInfo(Laya.URL.formatURL(url))) {
+	        if (!MiniFileMgr.getFileInfo(url)) {
 	            var tempUrl = Laya.URL.formatURL(url);
 	            if (url.indexOf(MiniAdpter.window.wx.env.USER_DATA_PATH) == -1 && (tempUrl.indexOf("http://") != -1 || tempUrl.indexOf("https://") != -1)) {
 	                if (MiniAdpter.isZiYu) {
-	                    thisLoader._loadImage(url, false);
+	                    thisLoader._loadImage(url);
 	                }
 	                else {
 	                    MiniFileMgr.downOtherFiles(tempUrl, new Laya.Handler(MiniLoader, MiniLoader.onDownImgCallBack, [url, thisLoader]), tempUrl);
 	                }
 	            }
 	            else
-	                thisLoader._loadImage(url, false);
+	                thisLoader._loadImage(url);
 	        }
 	        else {
-	            thisLoader._loadImage(url, false);
+	            thisLoader._loadImage(url);
 	        }
 	    }
 	    static onDownImgCallBack(sourceUrl, thisLoader, errorCode, tempFilePath = "") {
@@ -897,7 +895,7 @@ window.wxMiniGame = function (exports, Laya) {
 	            else
 	                fileNativeUrl = sourceUrl;
 	        }
-	        thisLoader._loadImage(fileNativeUrl, false);
+	        thisLoader._loadImage(fileNativeUrl);
 	    }
 	}
 
@@ -1162,7 +1160,7 @@ window.wxMiniGame = function (exports, Laya) {
 	                }
 	                for (i = 0; i < toloadPics.length; i++) {
 	                    var tempAtlasPngUrl = toloadPics[i];
-	                    MiniAdpter.postInfoToContext(Laya.Laya.URL.formatURL(url), Laya.Laya.URL.formatURL(tempAtlasPngUrl), atlasJson);
+	                    MiniAdpter.postInfoToContext(url, tempAtlasPngUrl, atlasJson);
 	                }
 	            }
 	            else {
@@ -1182,7 +1180,7 @@ window.wxMiniGame = function (exports, Laya) {
 	            fileNativeUrl = textureUrl;
 	        }
 	        if (fileNativeUrl) {
-	            MiniAdpter.window.wx.postMessage({ url: url, atlasdata: postData, imgNativeUrl: fileNativeUrl, imgReadyUrl: textureUrl, isLoad: "opendatacontext" });
+	            MiniAdpter.window.wx.postMessage({ url: Laya.URL.formatURL(url), atlasdata: postData, imgNativeUrl: fileNativeUrl, imgReadyUrl: textureUrl, isLoad: "opendatacontext" });
 	        }
 	        else {
 	            throw "获取图集的磁盘url路径不存在！";
@@ -1200,7 +1198,6 @@ window.wxMiniGame = function (exports, Laya) {
 	            fileNativeUrl = url;
 	        }
 	        if (fileNativeUrl) {
-	            url = Laya.Laya.URL.formatURL(url);
 	            MiniAdpter.window.wx.postMessage({ url: url, imgNativeUrl: fileNativeUrl, imgReadyUrl: url, isLoad: "openJsondatacontextPic" });
 	        }
 	        else {
@@ -1209,7 +1206,6 @@ window.wxMiniGame = function (exports, Laya) {
 	    }
 	    static sendJsonDataToDataContext(url) {
 	        if (!MiniAdpter.isZiYu) {
-	            url = Laya.Laya.URL.formatURL(url);
 	            var atlasJson = Laya.Loader.getRes(url);
 	            if (atlasJson) {
 	                MiniAdpter.window.wx.postMessage({ url: url, atlasdata: atlasJson, isLoad: "openJsondatacontext" });

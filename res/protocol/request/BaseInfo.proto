@@ -3,15 +3,24 @@ package BaseInfo;
 
 //<--------------- 背包
 
-//背包中单个道具
+//单个道具(泛用)
 message Item {
-    string id = 1;
-    int64 count = 2;
+    string type = 1;
+    string id = 2;
+    int64 amount = 3;
+}
+
+//玩家货币道具
+message CurrencyBag {
+    map<string, Item> currency = 1; //货币道具
 }
 
 //玩家所有道具
-message Bag {
-    map<string, Item> items = 1;
+message FullBag {
+    map<string, Item> currency = 1; //货币道具
+    map<string, Item> nauticalFoods = 2; //探险口粮
+    map<string, Item> nauticalTools = 3; //探险道具
+    map<string, int32> foodMenu = 4; //菜谱，key为FoodsList.Id，value为该菜品等级。map中不存在某id,或者value为0时，表示该菜品未解锁。
 }
 
 //一组奖励
@@ -52,25 +61,25 @@ message Building {
 message LetterBox {
     int64 capacity = 1;
     int64 fishToReward = 2;
-    int64 lastUpdateMillis = 3;  //上次计算自动收益的时间戳
+    int64 lastUpdateMillis = 3; //上次计算自动收益的时间戳
 }
 
 //<--------------- 任务
 message Tasks {
-    map<string, Task> dailyTasks = 1;   //每日任务
-    map<string, Task> trophyTasks = 2;  //成就任务
+    map<string, Task> dailyTasks = 1; //每日任务
+    map<string, Task> trophyTasks = 2; //成就任务
 }
 
 message Task {
-    string id = 1;          //任务id，对应Task.Id
-    int64 current = 2;      //当前进度
-    int64 target = 3;       //目标进度
-    string taskListId = 4;  //任务列表id，对应TaskList.Id
+    string id = 1; //任务id，对应Task.Id
+    int64 current = 2; //当前进度
+    int64 target = 3; //目标进度
+    string taskListId = 4; //任务列表id，对应TaskList.Id
 }
 
 //<--------------- 菜谱
 message FoodMenu {
-    map<string, int32> menu = 1;    //菜谱，key为FoodsList.Id，value为该菜品等级。map中不存在某id,或者value为0时，表示该菜品未解锁。
+    map<string, int32> menu = 1; //菜谱，key为FoodsList.Id，value为该菜品等级。map中不存在某id,或者value为0时，表示该菜品未解锁。
 }
 
 //<--------------- 广告

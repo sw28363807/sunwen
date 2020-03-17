@@ -24,7 +24,7 @@ message getDailyTaskRewardReq {
 message getDailyTaskRewardRes {
     option (cmdid) = 10302;
     BaseInfo.Tasks tasks = 1;
-    BaseInfo.Bag bag = 2;
+    BaseInfo.CurrencyBag bag = 2;
     BaseInfo.Rewards rewards = 3;
 }
 
@@ -38,6 +38,6 @@ message getTrophyTaskRewardReq {
 message getTrophyTaskRewardRes {
     option (cmdid) = 10303;
     BaseInfo.Tasks tasks = 1;
-    BaseInfo.Bag bag = 2;
+    BaseInfo.CurrencyBag bag = 2;
     BaseInfo.Rewards rewards = 3;
 }
