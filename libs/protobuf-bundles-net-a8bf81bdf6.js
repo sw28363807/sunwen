@@ -22,6 +22,8 @@ $root.Player = (function() {
          * @memberof Player
          * @interface ILoginReq
          * @property {string|null} [rid] LoginReq rid
+         * @property {string|null} [token] LoginReq token
+         * @property {string|null} [sdkName] LoginReq sdkName
          */
 
         /**
@@ -46,6 +48,22 @@ $root.Player = (function() {
          * @instance
          */
         LoginReq.prototype.rid = "";
+
+        /**
+         * LoginReq token.
+         * @member {string} token
+         * @memberof Player.LoginReq
+         * @instance
+         */
+        LoginReq.prototype.token = "";
+
+        /**
+         * LoginReq sdkName.
+         * @member {string} sdkName
+         * @memberof Player.LoginReq
+         * @instance
+         */
+        LoginReq.prototype.sdkName = "";
 
         /**
          * Creates a new LoginReq instance using the specified properties.
@@ -73,6 +91,10 @@ $root.Player = (function() {
                 writer = $Writer.create();
             if (message.rid != null && message.hasOwnProperty("rid"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.rid);
+            if (message.token != null && message.hasOwnProperty("token"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.token);
+            if (message.sdkName != null && message.hasOwnProperty("sdkName"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.sdkName);
             return writer;
         };
 
@@ -109,6 +131,12 @@ $root.Player = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.rid = reader.string();
+                    break;
+                case 2:
+                    message.token = reader.string();
+                    break;
+                case 3:
+                    message.sdkName = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -148,6 +176,12 @@ $root.Player = (function() {
             if (message.rid != null && message.hasOwnProperty("rid"))
                 if (!$util.isString(message.rid))
                     return "rid: string expected";
+            if (message.token != null && message.hasOwnProperty("token"))
+                if (!$util.isString(message.token))
+                    return "token: string expected";
+            if (message.sdkName != null && message.hasOwnProperty("sdkName"))
+                if (!$util.isString(message.sdkName))
+                    return "sdkName: string expected";
             return null;
         };
 

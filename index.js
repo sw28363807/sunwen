@@ -18,7 +18,7 @@ loadLib("libs/laya-2c4559e411.ui.js")
 loadLib("libs/protobuf-1c1d3db4e4.js")
 loadLib("libs/protobuf-library-77f796b346.js")
 loadLib("libs/protobuf-bundles-abd552a82a.js")
-loadLib("libs/protobuf-bundles-net-557bddcdeb.js")
+loadLib("libs/protobuf-bundles-net-a8bf81bdf6.js")
 loadLib("libs/laya-2feced7143.wxmini.js")
 //-----libs-end-------
-loadLib("js/bundle-cd0dd0a6b7.js");
+loadLib("js/bundle-434e37779b.js");

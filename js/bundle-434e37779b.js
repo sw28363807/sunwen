@@ -7206,6 +7206,8 @@
 
             console.debug("========= login =========");
             this._rid = loginParam.rid;
+            this._token = loginParam.token;
+            this._sdkName = loginParam.sdkName;
             this._socket.connectByUrl(url);
             this._loginHandler = handler;
             this._loginUrl = url;
@@ -7432,7 +7434,7 @@
                             this._reconnectedHandler.run();
                         }
                     } else {
-                        this.sendRequest("Player.LoginReq", {"rid":this._rid}, this._loginHandler);
+                        this.sendRequest("Player.LoginReq", {"rid":this._rid, "token": this._token, "sdkName": this._sdkName}, this._loginHandler);
                     }
                     break;
                 case WebSocketClient.DataMsg:
@@ -7617,7 +7619,7 @@
             WebSocketClient.getInstance().sendRequest(reqName, params, Laya.Handler.create(null, commonHandler));
         }
 
-        static login(url, serverId, rid, handler) {
+        static login(url, serverId, rid, token, handler) {
             let commonHandler = function() {
                 // 处理通用错误
                 const args = Array.from(arguments);
@@ -7628,7 +7630,11 @@
                     handler.runWith(args.slice(1));
                 }
             };
-            WebSocketClient.getInstance().login(url, {"rid":rid+"_"+serverId}, Laya.Handler.create(null, commonHandler));
+            let sdkName = "dev";
+            if (Laya.Browser.onMiniGame) {
+                sdkName = "wx";
+            }
+            WebSocketClient.getInstance().login(url, {"rid":rid+"_"+serverId, "sdkName": sdkName, "token": token }, Laya.Handler.create(null, commonHandler));
         }
 
         static registerNotifyCallback(opCode, caller, listener, args) {
@@ -7773,7 +7779,7 @@
 
 
     let _rid;
-    let _token;
+    let _token = "dev";
     let _serverTag;
     class System {
         static init() {
@@ -8032,7 +8038,7 @@
                                 System.setToken(res.data.data.token);
                                 System.setRid(res.data.data.rid);
                                 System.setServerTag(res.data.data.gameserverUrl);
-                                Service.login(System.getServerUrl(), "1", rid, Laya.Handler.create(null, dealFunc));
+                                Service.login(System.getServerUrl(), "1", rid, System.getToken(), Laya.Handler.create(null, dealFunc));
                             },
                             fail() {
                                 console.debug("登录发送code服务器返回失败!!!");
@@ -8045,7 +8051,7 @@
                     }
                 });
             } else {
-                Service.login(System.getServerUrl(), serverId, rid, Laya.Handler.create(null, dealFunc));
+                Service.login(System.getServerUrl(), serverId, rid, System.getToken(), Laya.Handler.create(null, dealFunc));
             }
         }
 
