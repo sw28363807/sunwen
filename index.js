@@ -21,4 +21,4 @@ loadLib("libs/protobuf-bundles-abd552a82a.js")
 loadLib("libs/protobuf-bundles-net-a8bf81bdf6.js")
 loadLib("libs/laya-2feced7143.wxmini.js")
 //-----libs-end-------
-loadLib("js/bundle-434e37779b.js");
+loadLib("js/bundle-c1d4dca1b7.js");
