@@ -3760,11 +3760,11 @@
         }
 
         onAwake() {
-            this.countLabel = this.owner.getChildByName("AddCatTxt");
+            this.progressBar= this.owner.getChildByName("bar");
         }
 
         onEnable() {
-            this.countLabel.text = String(this.count);
+            this.progressBar.value=this.count/this.maxCount;
             this.owner.on(Laya.Event.MOUSE_DOWN, this, function() {
                 let catCount =  CatSystem.getCatCountBySceneId(Constants.CoffeeSceneId);
                 if(catCount >= 15) {
@@ -3776,7 +3776,7 @@
                     this.count = this.maxCount;
                     EventMgr.getInstance().postEvent("FORCE_ATTRACT_COFFEE_CAT");
                 }
-                this.countLabel.text = String(this.count);
+                this.progressBar.value=this.count/this.maxCount;
                 Laya.SoundManager.playSound("sound/clickSound.mp3", 1);
             });
         }
@@ -7591,15 +7591,6 @@
     WebSocketClient.ResponseData = 0x02;
     WebSocketClient.NotifyData = 0x03;
 
-    let url = "ws://49.232.18.82:14002"; //开发服
-    // let url = "ws://49.232.18.82:14001"    //稳定服
-    // let url = "ws://49.232.98.28:14002"    //调试服
-    // let url = "wss://shuangfeng33.cn:17305/gs1"    //稳定服
-    // let url = "ws://10.0.72.156:9823"
-    // let url = "ws://127.0.0.1:9823"
-    // let serverId = "1"  //稳定服
-    let serverId = "2"; //开发服
-
     class Service {
 
         static init(handler) {
@@ -7626,7 +7617,7 @@
             WebSocketClient.getInstance().sendRequest(reqName, params, Laya.Handler.create(null, commonHandler));
         }
 
-        static login(rid, handler) {
+        static login(url, serverId, rid, handler) {
             let commonHandler = function() {
                 // 处理通用错误
                 const args = Array.from(arguments);
@@ -7771,9 +7762,20 @@
         }
     }
 
-    let _rid;
-    class System {
+    let url = "ws://49.232.18.82:14002/gs2"; //开发服
+    // let url = "ws://49.232.18.82:14001/gs1"    //稳定服
+    // let url = "ws://49.232.98.28:14002"    //调试服
+    // let url = "wss://shuangfeng33.cn:17305/gs1"    //稳定服
+    // let url = "ws://10.0.72.156:9823"
+    // let url = "ws://127.0.0.1:9823"
+    // let serverId = "1"  //稳定服
+    let serverId = "2"; //开发服
 
+
+    let _rid;
+    let _token;
+    let _serverTag;
+    class System {
         static init() {
             if(System.inited==null){
                 System.inited = true;
@@ -7843,6 +7845,30 @@
         static getRid(){
             return _rid;
         }
+
+        static setToken(token) {
+            _token = token;
+        }
+
+        static getToken(){
+            return _token;
+        }
+
+        static setServerTag(tag) {
+            _serverTag = tag;
+        }
+
+        static getServerTag(){
+            return _serverTag;
+        }
+
+        static getServerUrl() {
+            if(Laya.Browser.onMiniGame) {
+                return "wss://fy.hulai.com:17305"+_serverTag
+            }
+            return url
+        }
+
 
         static _updateCurrencyBag(bag) {
             if(bag){
@@ -7967,66 +7993,59 @@
         }
 
         static login(rid, handler) {
+            let dealFunc = function(res) {
+                System.setRid(rid);
+                let bag = res.bag;
+                let playerBuilding = res.playerBuilding;
+                let playerPets = res.playerPets;
+                let tasks = res.tasks;
+                let foodMenu = res.menu;
+                let letterBox = res.letterbox;
+                let customData = res.customData;
+                System._updateCurrencyBag(bag);
+                System._initBuilding(playerBuilding);
+                System._updatePets(res.playerPets);
+                System._updateTasks(tasks);
+                System._updateFoods(foodMenu);
+                System._updateLetterBox(letterBox);
+                System._restoreCustomData(customData);
+                if(handler) {
+                    Laya.LocalStorage.setItem("user_rid", rid);
+                    handler.runWith([res]);
+                }
+                SyncSystem.scheduleUpdate();
+            };
             if (Laya.Browser.onMiniGame) {
-                // wx.login({
-                //     success (res) {
-                //       if (res.code) {
-                //         console.log(res);
-                //         handler.runWith([res]);
-                //       } else {
-                //         console.log('登录失败！' + res.errMsg)
-                //       }
-                //     }
-                //   });
-                let dealFunc = function(res) {
-                    System.setRid(rid);
-                    let bag = res.bag;
-                    let playerBuilding = res.playerBuilding;
-                    let playerPets = res.playerPets;
-                    let tasks = res.tasks;
-                    let foodMenu = res.menu;
-                    let letterBox = res.letterbox;
-                    let customData = res.customData;
-                    let fishingGameInfo = res.fishingGameInfo;
-                    System._updateCurrencyBag(bag);
-                    System._initBuilding(playerBuilding);
-                    System._updatePets(res.playerPets);
-                    System._updateTasks(tasks);
-                    System._updateFoods(foodMenu);
-                    System._updateLetterBox(letterBox);
-                    System._restoreCustomData(customData);
-                    System._updateFishGameInfo(fishingGameInfo);
-                    if(handler) {
-                        Laya.LocalStorage.setItem("user_rid", rid);
-                        handler.runWith([res]);
+                wx.login({
+                    success (res) {
+                      if (res.code) {
+                        // console.log(res);
+                        wx.request({
+                            url: 'https://fy.hulai.com:17305/gatew',
+                            method: 'POST',
+                            header: {
+                                'content-type': 'application/x-www-form-urlencoded'
+                              },
+                            data: 'opCode=110001&params={\'sdkName\': \'wx\', \'param\':\'' + res.code + '\'}',
+                            success (res) {
+                                console.debug("登录发送code服务器返回:" + JSON.stringify(res.data));
+                                System.setToken(res.data.data.token);
+                                System.setRid(res.data.data.rid);
+                                System.setServerTag(res.data.data.gameserverUrl);
+                                Service.login(System.getServerUrl(), "1", rid, Laya.Handler.create(null, dealFunc));
+                            },
+                            fail() {
+                                console.debug("登录发送code服务器返回失败!!!");
+                            }
+                          });
+                        // handler.runWith([res]);
+                      } else {
+                        console.log('登录失败！' + res.errMsg);
+                      }
                     }
-                    SyncSystem.scheduleUpdate();
-                };
-                Service.login(rid, Laya.Handler.create(null, dealFunc));
+                });
             } else {
-                let dealFunc = function(res) {
-                    System.setRid(rid);
-                    let bag = res.bag;
-                    let playerBuilding = res.playerBuilding;
-                    let playerPets = res.playerPets;
-                    let tasks = res.tasks;
-                    let foodMenu = res.menu;
-                    let letterBox = res.letterbox;
-                    let customData = res.customData;
-                    System._updateCurrencyBag(bag);
-                    System._initBuilding(playerBuilding);
-                    System._updatePets(res.playerPets);
-                    System._updateTasks(tasks);
-                    System._updateFoods(foodMenu);
-                    System._updateLetterBox(letterBox);
-                    System._restoreCustomData(customData);
-                    if(handler) {
-                        Laya.LocalStorage.setItem("user_rid", rid);
-                        handler.runWith([res]);
-                    }
-                    SyncSystem.scheduleUpdate();
-                };
-                Service.login(rid, Laya.Handler.create(null, dealFunc));
+                Service.login(System.getServerUrl(), serverId, rid, Laya.Handler.create(null, dealFunc));
             }
         }
 
@@ -8811,8 +8830,8 @@
             icon.skin = food.getShopItems();
             if(icon.width > 128) {
                 //做一个简单的长宽限制，防止过大
-                icon.width = 128;
                 icon.height = icon.height * 128 / icon.width;
+                icon.width = 128;
             }
             let upIcon = this.getChildByName("upIcon");
             upIcon.visible = false;
