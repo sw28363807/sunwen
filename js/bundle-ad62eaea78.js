@@ -5636,18 +5636,20 @@
 
         AddCat(action, args, mode) {
             if(mode==1) {
-                let owner = null;
-                let catId = args;
-                let catData = CatSystem.getCatData(catId);
-                let initX = catData.getX();
-                let initY = catData.getY();
-                let scene = SceneMgr.getInstance().getScene(Constants.CoffeeSceneId);
-                let cat = CatFactory.getInstance().createCoffeeCat(
-                    catData,
-                    scene.root, initX, initY, null);
-                // owner.playAnim("stand", true);
-
-                this._cat = cat;
+                if(scene.root != null) {
+                    let owner = null;
+                    let catId = args;
+                    let catData = CatSystem.getCatData(catId);
+                    let initX = catData.getX();
+                    let initY = catData.getY();
+                    let scene = SceneMgr.getInstance().getScene(Constants.CoffeeSceneId);
+                    let cat = CatFactory.getInstance().createCoffeeCat(
+                        catData,
+                        scene.root, initX, initY, null);
+                    // owner.playAnim("stand", true);
+        
+                    this._cat = cat;
+                }
             }
 
             CoffeeCatMgr.getInstance().addCat(this._cat);
