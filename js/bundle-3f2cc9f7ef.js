@@ -5636,7 +5636,7 @@
 
         AddCat(action, args, mode) {
             if(mode==1) {
-                if(scene.root != null) {
+                if(scene && scene.root != null) {
                     let owner = null;
                     let catId = args;
                     let catData = CatSystem.getCatData(catId);
