@@ -5636,13 +5636,13 @@
 
         AddCat(action, args, mode) {
             if(mode==1) {
+                let scene = SceneMgr.getInstance().getScene(Constants.CoffeeSceneId);
                 if(scene && scene.root != null) {
                     let owner = null;
                     let catId = args;
                     let catData = CatSystem.getCatData(catId);
                     let initX = catData.getX();
                     let initY = catData.getY();
-                    let scene = SceneMgr.getInstance().getScene(Constants.CoffeeSceneId);
                     let cat = CatFactory.getInstance().createCoffeeCat(
                         catData,
                         scene.root, initX, initY, null);
