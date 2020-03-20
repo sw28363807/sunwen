@@ -1,0 +1,1 @@
+{"type":"Box","props":{"y":0,"x":0,"width":150,"presetID":1,"name":"cat_menu_tip","isPresetRoot":true,"height":150},"compId":506,"child":[{"type":"Sprite","props":{"y":75,"x":75,"visible":true,"presetID":3,"name":"meals_img"},"compId":508}],"loadList":[],"loadList3D":[]}
